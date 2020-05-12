@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const { isEmail, isLength } = require('validator');
+
 const UserSchema = new Schema({
     email: {
         type: String,
@@ -16,7 +17,8 @@ const UserSchema = new Schema({
     dateCreated: {
         type: Date,
         default: Date.now()
-    }
+    },
+    todos: [ { type: Schema.Types.ObjectId, ref: 'Todo' } ]
 });
 
-module.exports = mongoose.model('User, UserSchema');
+module.exports = model('User', UserSchema);

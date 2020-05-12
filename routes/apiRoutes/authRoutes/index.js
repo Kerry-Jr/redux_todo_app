@@ -1,17 +1,6 @@
-// declare all of our routes for signing a user in or signing a user up
-
 const router = require('express').Router();
+const { signUp } = require('./../../../controllers/authController');
 
-
-
-router.post('/signup');
-
-
-
-
-
-
-
-
+router.post('/signup', signUp);
 
 module.exports = router;

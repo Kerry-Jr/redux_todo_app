@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const { isEmail, isLength } = require('validator');
 const { compare, genSalt, hash } = require('bcryptjs');
+
 const UserSchema = new Schema({
   email: {
     type: String,
@@ -20,6 +21,7 @@ const UserSchema = new Schema({
   },
   todos: [ {type: Schema.Types.ObjectId, ref: 'Todo' } ],
 });
+
 UserSchema.methods.comparePassword = async function(candidatePassword) {
   const user = this;
   try {
@@ -29,6 +31,7 @@ UserSchema.methods.comparePassword = async function(candidatePassword) {
     return Promise.reject(e);
   }
 }
+
 UserSchema.pre('save', async function (next) {
   const user = this;
   if (user.isModified('password')) {
@@ -45,4 +48,6 @@ UserSchema.pre('save', async function (next) {
   // Finally call save
   next();
 });
+
+
 module.exports = model('User', UserSchema);

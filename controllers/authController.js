@@ -36,4 +36,3 @@ module.exports = {
   },
   signIn: (req, res) => res.status(200).json({ token: tokenForUser(req.user) })
 };
-

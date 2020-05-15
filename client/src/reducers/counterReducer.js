@@ -1,5 +1,4 @@
-import { INCREMENT } from '../actions/types';
-import { DECREMENT } from '../actions/types';
+import { INCREMENT, DECREMENT } from '../actions/types';
 
 
 export default function(state = 0, action) {

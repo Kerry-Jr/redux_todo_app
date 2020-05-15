@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Grid, Header, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { increment } from "../../actions/counterActions";
-import { decrement } from '../../actions/counterActions';
+import { increment, decrement } from "../../actions/counterActions";
+
 
 
 

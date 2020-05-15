@@ -1,5 +1,5 @@
-import { INCREMENT } from '../types';
-import { DECREMENT } from "../types";
+import { INCREMENT, DECREMENT } from '../types';
+
 
 // Create action creator
 

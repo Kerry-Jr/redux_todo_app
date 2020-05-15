@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Header, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { increment } from "../../actions/counterActions";
+import { decrement } from '../../actions/counterActions';
 
 
 
@@ -21,6 +22,7 @@ class Counter extends Component {
               icon='minus circle'
               content='Decrement'
               negative
+              onClick={this.props.decrement}
             />
             <Button.Or/>
             <Button
@@ -56,4 +58,4 @@ function mapStateToProps(state) {
 //this.props.counter
 //this.props.increment
 
-export default connect(mapStateToProps, { increment })(Counter);
+export default connect(mapStateToProps, { increment, decrement })(Counter);

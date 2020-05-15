@@ -18,6 +18,20 @@ class SignUp extends Component {
             />
         )
     }
+    renderPassword = ({ input, meta }) => {
+        return (
+            <Form.Input
+                {...input}
+                type='password'
+                fluid
+                error={ meta.touched && meta.error }
+                icon='lock'
+                iconPosition='left'
+                autoComplete='off'
+                placeholder='password'
+            />
+        )
+    }
     render() {
         return (
             <Form size='large'>
@@ -32,6 +46,16 @@ class SignUp extends Component {
                         }
                         component={this.renderEmail}
                     />
+                    <Field
+                        name='password'
+                        validate={
+                            [
+                                required({ msg: 'You must provide a password bruhh.. Please try again' }),
+                                length({ minimum: 6, msg: 'Your password must be at least 6 characters long' })
+                            ]
+                        }
+                        component={this.renderPassword}
+                    />
                 </Segment>
             </Form>
         );
@@ -45,7 +69,7 @@ const asyncValidate = async ({ email }) => {
             throw new Error();
         }
     } catch (e) {
-        throw { email: 'Email is already taken bruuhh, please try again' };
+        throw { email: 'Email is already taken bruuh.. Please try again' };
     }
 };
 export default reduxForm({

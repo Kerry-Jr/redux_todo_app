@@ -1,84 +1,64 @@
-const { Todo, User } = require('./../models');
-
+const { User, Todo } = require('../models/index');
 
 module.exports = {
-  addTodo: async (req, res) => {
-    const { text } = req.body;
-    if (!text) {
-      return res.status(400).json({ error: 'You must provide a text' });
-    }
-    try {
-      const newTodo = await new Todo({ text, user: req.user._id }).save();
-      req.user.todos.push(newTodo);
-      await req.user.save();
-      console.log("Saved", req.user);
-      return res.status(200).json(newTodo);
-    } catch (e) {
-      return res.status(403).json(e);
-    }
-  },
   getAllUserEmails: async (req, res) => {
-    console.log(req.user);
     try {
-      const users = await User.find({}, 'email');
-      if (!users) {
-        return res.status(404).json({ error: 'No user found' });
-      }
-      return res.status(200).json(users);
+      const userEmails = await User.find({}, 'email');
+      if (!userEmails) { return res.status(404).json({ error: 'No user emails found '});}
+      return res.status(200).json(userEmails);
     } catch (e) {
-      return res.status(403).json(e);
+      return res.status(403).json({ e });
     }
   },
   getUserTodos: async (req, res) => {
-    console.log(req.user);
     try {
-      // const user = await User.findById(req.user._id).populate('todos');
-      // return res.status(200).json(user.todos);
       const todos = await Todo.find({ user: req.user._id });
-      return res.status(200).json(todos);
+      return res.json(todos);
     } catch (e) {
-      return res.status(403).json(e);
+      return res.status(403).json({ e });
     }
   },
   deleteUserTodoById: async (req, res) => {
+    // grab todoId from req.params
     const { todoId } = req.params;
-    console.log(req.user);
     try {
+      // First find the todo by Id
       const todoToDelete = await Todo.findById(todoId);
       if (!todoToDelete) {
-        return res.status(401).json({ error: 'No todo with that id' });
+        return res.status(401).json({ error: 'No todo with that Id' });
       }
-      // This check is to see if the todo does not belong to the logged in User
+      // Check if the todo does not belong to the user.
+      // if it doesnt, do not allow the user to delete it
       if (req.user._id.toString() !== todoToDelete.user.toString()) {
-        return res.status(401).json({ error: 'You cannot delete a todo that is not yours' });
+        return res.status(401).json({ error: "You cannot delete a todo that's not yours" });
       }
+      //  otherwise, delete the todo
       const deletedTodo = await Todo.findByIdAndDelete(todoId);
-      return res.status(200).json(deletedTodo);
+      // Respond back with the deleted todo
+      return res.json(deletedTodo);
     } catch (e) {
-      return res.status(403).json(e);
+      return res.status(403).json({ e });
     }
   },
-  updateUserTodoById: async (req, res) => {
-    // id field will come from req.params
+  updateTodoById: async (req, res) => {
+  //   Grab todoId from params
     const { todoId } = req.params;
-    // completed and text fields will come from req.body
-    const { completed, text } = req.body;
-    if (!text) {
-      return res.status(401).json({ error: "You must provide text for the todo!" });
-    }
+    //  grab text and completed from the database
+    const { text, completed } = req.body;
     try {
       const todoToUpdate = await Todo.findById(todoId);
       if (!todoToUpdate) {
-        return res.status(404).json({ error: "No todo with that id!" });
+        return res.status(401).json({ error: 'No todo with that Id'});
       }
       if (req.user._id.toString() !== todoToUpdate.user.toString()) {
-        return res.status(401).json({ error: "You cannot update a todo that is not yours!" });
+        return res.status(401).json({ error: "You cannot update a todo that's not yours" });
       }
-      const updatedTodo = await Todo.findByIdAndUpdate(todoId, { text, completed }, { new: true });
-      return res.status(200).json(updatedTodo);
-    } catch (error) {
-      return res.status(403).json(error);
+      const updatedTodo = await Todo.findByIdAndUpdate(todoId,
+        { completed, text },
+        { new: true });
+      return res.json(updatedTodo);
+    } catch (e) {
+      return res.status(403).json({ e });
     }
   },
-
 };

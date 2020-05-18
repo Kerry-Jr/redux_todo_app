@@ -2,10 +2,10 @@ const { User, Todo } = require('../models/index');
 
 module.exports = {
   getAllUserEmails: async (req, res) => {
+    const { email } = req.query;
     try {
-      const userEmails = await User.find({}, 'email');
-      // if (!userEmails) { return res.status(404).json({ error: 'No user emails found '});}
-      return res.status(200).json(userEmails);
+      const userEmail = await User.findOne({email}, 'email');
+      return res.status(200).json(userEmail);
     } catch (e) {
       return res.status(403).json({ e });
     }

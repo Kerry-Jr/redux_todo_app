@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Header, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { increment, decrement } from "../../actions/counterActions";
-
-
-
+import { increment, decrement } from '../../actions/counterActions';
 
 class Counter extends Component {
   render() {
@@ -39,23 +36,21 @@ class Counter extends Component {
   }
 }
 
-// connect takes 2 parameters
-// the 1st one is a function that we should call mapStateToProps
-// 2nd one is mapDispatchToProps. This is going to be an object
-//That object is what action creators we want connected to this component
 
+
+// connect takes 2 parameters.
+// The 1st one is a function that we should call mapStateToProps
+// The 2nd one, is mapDispatchToProps. This is going to be an object
+// That object is what action creators we want connected to this component
 function mapStateToProps(state) {
   return { counter: state.counter };
+};
 
-}
+// connect is a higher order component
 
-//connect is a higher order component
-
-
-
-
-// what this will do now inside the counter component I will have access to
-//this.props.counter
-//this.props.increment
-
+//What this will do
+// Is now inside of the counter component
+//I will have access to
+// this.props.counter
+// this.props.increment
 export default connect(mapStateToProps, { increment, decrement })(Counter);

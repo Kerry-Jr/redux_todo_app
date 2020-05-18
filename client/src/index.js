@@ -13,7 +13,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // the 3rd is any middleware we want to use with redux
 const store = createStore(
     reducers,
-    {auth: { authenticated: localStorage.getItem('token')}},
+    // {auth: { authenticated: localStorage.getItem('token')}},
     composeEnhancers(applyMiddleware(reduxThunk))
 );
 ReactDOM.render(

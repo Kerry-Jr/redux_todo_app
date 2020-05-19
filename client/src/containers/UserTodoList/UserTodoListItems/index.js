@@ -1,8 +1,7 @@
 import React from 'react';
 import { Header, List, Button, Popup } from 'semantic-ui-react';
+
 import DeleteTodoModal from './../../../components/DeleteTodoModal';
-
-
 
 export default (props) => {
   if (props.todos.length === 0) {
@@ -23,21 +22,20 @@ export default (props) => {
                   color='blue'
                   content='Mark Complete'
                   size='small'
-
                 />
               }
               content={
                 <Button
                   color='green'
                   content='Are you sure this is done?'
-                  onClick={ () => props.handleUpdate(_id, completed, text)}
+                  onClick={ (event) => props.handleUpdate(_id, completed, text)}
                 />
               }
             />
             <DeleteTodoModal
-                handleDelete={props.handleDelete}
-                text={text}
-                id={_id}
+              handleDelete={props.handleDelete}
+              text={text}
+              id={_id}
             />
           </List.Content>
         </List.Item>

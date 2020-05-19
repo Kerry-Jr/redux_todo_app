@@ -3,12 +3,16 @@ import { reduxForm, Field } from 'redux-form';
 import { Header, Form, Segment, Message, List, Pagination, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+
 import axios from 'axios';
+
+import requireAuth from './../../hoc/requireAuth';
+
 import { getUserTodos, updateCompleteUserTodoById, deleteTodoById } from '../../actions/allTodos';
 import { ADD_USER_TODO, ADD_USER_TODO_ERROR } from '../../actions/types';
+
+
 import UserTodoListItems from './UserTodoListItems';
-
-
 
 class UserTodoList extends Component {
   state = {
@@ -16,9 +20,12 @@ class UserTodoList extends Component {
     start: 0,
     end: 10,
   }
+
+
   componentDidMount() {
     this.props.getUserTodos();
   }
+
   onSubmit = async (formValues, dispatch) => {
     try {
       await axios.post('/api/user/todos', formValues, { headers: { 'authorization': localStorage.getItem('token')}});
@@ -28,6 +35,7 @@ class UserTodoList extends Component {
       dispatch({ type: ADD_USER_TODO_ERROR, payload: 'You must provide text' });
     }
   }
+
   renderAddTodo = ({ input, meta, language })=> {
     return (
       <Form.Input
@@ -38,6 +46,7 @@ class UserTodoList extends Component {
       />
     );
   }
+
   handlePageChange = (event, data) => {
     this.setState({
       activePage: data.activePage,
@@ -45,6 +54,7 @@ class UserTodoList extends Component {
       end: data.activePage * 10
     });
   }
+
   render() {
     const { handleSubmit } = this.props;
     console.log(this.props.userTodos);
@@ -84,6 +94,7 @@ class UserTodoList extends Component {
     );
   }
 }
+
 function mapStateToProps(state) {
   return {
     userTodos: state.todos.userTodos,
@@ -91,11 +102,18 @@ function mapStateToProps(state) {
     todoServerError: state.todos.getUserTodosServerError
   };
 };
+
+
 // export default reduxForm({ form: 'addTodo' })(connect(mapStateToProps, { getUserTodos })(UserTodoList));
 // export default connect(mapStateToProps, { getUserTodos })(reduxForm({ form: 'addTodo' })(UserTodoList))
+
 // const composedComponent = connect(mapStateToProps, { getUserTodos })(UserTodoList);
 // export default reduxForm({ form: 'addTodo' })(composedComponent);
-export default compose(
+
+const composedComponent = compose(
   reduxForm({ form: 'addTodo' }),
   connect(mapStateToProps, { getUserTodos, updateCompleteUserTodoById, deleteTodoById })
 )(UserTodoList);
+
+
+export default requireAuth(composedComponent);

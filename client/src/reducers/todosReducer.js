@@ -8,6 +8,7 @@ import {
   UPDATE_TODO_BY_ID_ERROR,
   DELETE_TODO_BY_ID_ERROR,
 } from '../actions/types';
+
 const INITIAL_STATE = {
   todos: [],
   userTodos: [],
@@ -18,6 +19,7 @@ const INITIAL_STATE = {
   deleteTodoError: '',
   addTodoError: '',
 };
+
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_ALL_TODOS:

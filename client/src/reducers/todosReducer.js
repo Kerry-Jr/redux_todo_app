@@ -6,6 +6,7 @@ import {
   ADD_USER_TODO,
   ADD_USER_TODO_ERROR,
 } from '../actions/types';
+
 const INITIAL_STATE = {
   todos: [],
   userTodos: [],
@@ -14,6 +15,7 @@ const INITIAL_STATE = {
   getAllTodosError: '',
   addTodoError: '',
 };
+
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_ALL_TODOS:

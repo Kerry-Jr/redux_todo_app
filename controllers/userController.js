@@ -1,4 +1,5 @@
 const { User, Todo } = require('../models/index');
+
 module.exports = {
   getAllUserEmails: async (req, res) => {
     console.log(req.query);
@@ -55,7 +56,7 @@ module.exports = {
     }
   },
   updateTodoById: async (req, res) => {
-    //   Grab todoId from params
+  //   Grab todoId from params
     const { todoId } = req.params;
     //  grab text and completed from the database
     const { text, completed } = req.body;

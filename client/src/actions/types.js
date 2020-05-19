@@ -16,6 +16,13 @@ export const ADD_USER_TODO = 'ADD_USER_TODO';
 export const ADD_USER_TODO_ERROR = 'ADD_USER_TODO_ERROR';
 
 
+export const UPDATE_TODO_BY_ID = 'UPDATE_TODO_BY_ID';
+export const UPDATE_TODO_BY_ID_ERROR = 'UPDATE_TODO_BY_ID_ERROR';
+
+
+
+
+
 // Authenticate user action types
 export const AUTH_USER = 'AUTH_USER';
 export const AUTH_USER_ERROR = 'AUTH_USER_ERROR';

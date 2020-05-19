@@ -1,6 +1,5 @@
 import React from 'react';
 import { Header, List, Button, Popup } from 'semantic-ui-react';
-
 export default (props) => {
   if (props.todos.length === 0) {
     return <Header content='No todos yet'/>;
@@ -26,6 +25,7 @@ export default (props) => {
                 <Button
                   color='green'
                   content='Are you sure this is done?'
+                  onClick={ () => props.handleUpdate(_id, completed, text)}
                 />
               }
             />
